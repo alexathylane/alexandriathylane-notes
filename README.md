@@ -15,7 +15,11 @@ Quartz-powered digital garden publishing an Obsidian vault as a searchable, inte
 
 ## Quick Start
 
+All commands run from **this repository** (`alexandriathylane-notes/`), not the Obsidian vault.
+
 ```bash
+# From: ~/Code/alexandriathylane-notes/
+
 # Install dependencies
 npm install
 
@@ -47,9 +51,11 @@ alexandriathylane-notes/           notes-vault/
          └────── reads at build time ─────┘
 ```
 
-- Vault location: `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes-vault/`
-- Quartz reads it via `--directory` flag — no copying or syncing
-- Edit notes in Obsidian, run `./deploy.sh` to publish
+- **Vault location:** `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes-vault/`
+- **How it works:** Quartz reads the vault via `--directory` flag at build time — no copying or syncing
+- **Workflow:** Edit notes in Obsidian → run `./deploy.sh` from this repo → site updates
+
+> **Important:** You never need to `cd` into the vault. All build/deploy commands run from this repository.
 
 ---
 
@@ -159,9 +165,12 @@ configuration: {
 
 ## Deployment
 
+All deployment commands run from **this repository** (`alexandriathylane-notes/`).
+
 ### Using deploy.sh (Recommended)
 
 ```bash
+# From: ~/Code/alexandriathylane-notes/
 ./deploy.sh
 ```
 
@@ -172,10 +181,12 @@ This script:
 ### Manual Deployment
 
 ```bash
+# From: ~/Code/alexandriathylane-notes/
+
 # Build
 npx quartz build --directory "/Users/alexandriarohn/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes-vault"
 
-# Deploy
+# Deploy (from the public subfolder)
 cd public && vercel --prod --yes
 ```
 
@@ -196,6 +207,7 @@ cd public && vercel --prod --yes
 ### Local Preview
 
 ```bash
+# From: ~/Code/alexandriathylane-notes/
 npx quartz build --directory "/path/to/vault" --serve --port 8080
 ```
 
@@ -203,8 +215,8 @@ Opens at http://localhost:8080 with hot reload.
 
 ### Adding Content
 
-1. Create/edit `.md` files in your Obsidian vault
-2. Run `./deploy.sh` to publish
+1. Create/edit `.md` files in your **Obsidian vault** (in Obsidian app or any editor)
+2. Run `./deploy.sh` from **this repo** to publish
 
 ### Excluding Content
 
