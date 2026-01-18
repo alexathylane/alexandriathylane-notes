@@ -1,0 +1,7 @@
+.DS_Store
+node_modules
+.quartz-cache
+private/
+.obsidian
+prof
+tsconfig.tsbuildinfo

@@ -8,6 +8,6 @@ echo "Building Quartz from vault..."
 npx quartz build --directory "$VAULT_PATH"
 
 echo "Deploying to Vercel..."
-vercel --prod
+vercel --prod --yes
 
 echo "Done!"

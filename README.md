@@ -186,19 +186,24 @@ This script:
 # Build
 npx quartz build --directory "/Users/alexandriarohn/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes-vault"
 
-# Deploy (from the public subfolder)
-cd public && vercel --prod --yes
+# Deploy (from repo root, NOT from public/)
+vercel --prod --yes
 ```
 
 ### Vercel Configuration
 
-`vercel.json`:
+`vercel.json` (in repo root):
 ```json
 {
-  "cleanUrls": true,      // /page instead of /page.html
+  "buildCommand": "",
+  "outputDirectory": "public",
+  "framework": null,
+  "cleanUrls": true,
   "trailingSlash": false
 }
 ```
+
+**Critical:** The `cleanUrls: true` setting makes `/Philosophy/page` serve `/Philosophy/page.html`. Without it, all subpages return 404.
 
 ---
 
@@ -267,6 +272,40 @@ notes-vault/
 ├── _Unpublished/              # (excluded from build)
 └── ...
 ```
+
+---
+
+## Troubleshooting
+
+### All subpages return 404
+
+**Symptoms:** Homepage works, but clicking any link or visiting any subpage shows "Either this page is private or doesn't exist."
+
+**Cause:** Vercel isn't applying the `cleanUrls: true` setting from `vercel.json`. This happens when:
+1. You deployed from `public/` instead of the repo root, OR
+2. Vercel is linked to the wrong project
+
+**How to diagnose:**
+```bash
+# Check which projects exist and which has your domain
+vercel project ls
+```
+
+If you see multiple projects (e.g., `alexandriathylane-notes` AND `public`), the domain might be on the wrong one.
+
+**How to fix:**
+```bash
+# 1. Delete .vercel folder to reset project linking
+rm -rf .vercel
+
+# 2. Redeploy from repo root (reads vercel.json with cleanUrls)
+./deploy.sh
+
+# 3. If domain is on wrong project, reassign it:
+vercel alias set alexandriathylane-notes.vercel.app notes.alexandriathylane.com
+```
+
+**Prevention:** Always deploy from repo root, never `cd public && vercel`. The `deploy.sh` script handles this correctly.
 
 ---
 
