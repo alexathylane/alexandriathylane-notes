@@ -17,7 +17,7 @@ const config: QuartzConfig = {
     baseUrl: "notes.alexandriathylane.com",
     ignorePatterns: [
       "_Unpublished",
-      "Alexandria Thylane Rohn.md",
+      "CONVENTIONS.md",
       "CNAME",
       ".obsidian",
       ".smart-env",
